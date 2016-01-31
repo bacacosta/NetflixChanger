@@ -1,4 +1,4 @@
-package com.chuvadasquatro.netflixchanger;
+package com.chuvadasquatro.netflixchanger.utils;
 
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualLinkedHashBidiMap;
