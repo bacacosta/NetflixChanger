@@ -14,22 +14,23 @@ import com.chuvadasquatro.netflixchanger.utils.Constants;
  * @author Rodrigo Costa
  */
 public class CountryAdapter extends BaseAdapter {
-	private Context context;
-	private String[] countryCodes;
+	private Context mContext;
+	private String[] mCountryCodes;
 
-	public CountryAdapter(Context c) {
-		context = c;
-		countryCodes = Constants.COUNTRIES.keySet().toArray(new String[Constants.COUNTRIES.size()]);
+	public CountryAdapter(Context context) {
+		mContext = context;
+		mCountryCodes =
+				Constants.COUNTRIES.keySet().toArray(new String[Constants.COUNTRIES.size()]);
 	}
 
 	@Override
 	public int getCount() {
-		return countryCodes.length;
+		return mCountryCodes.length;
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return countryCodes[position];
+		return mCountryCodes[position];
 	}
 
 	@Override
@@ -39,13 +40,13 @@ public class CountryAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		if (convertView != null && convertView.getTag().equals(countryCodes[position])) {
+		if (convertView != null && convertView.getTag().equals(mCountryCodes[position])) {
 			return convertView;
 		}
 
-		CheckedTextView country = new CheckedTextView(context);
-		country.setTag(countryCodes[position]);
-		country.setText(Constants.COUNTRIES.get(countryCodes[position]));
+		CheckedTextView country = new CheckedTextView(mContext);
+		country.setTag(mCountryCodes[position]);
+		country.setText(Constants.COUNTRIES.get(mCountryCodes[position]));
 		country.setCheckMarkDrawable(getCountryDrawable());
 		return country;
 	}
@@ -54,11 +55,11 @@ public class CountryAdapter extends BaseAdapter {
 		StateListDrawable countryDrawable = new StateListDrawable();
 		countryDrawable.addState(
 				new int[] {-android.R.attr.state_checked},
-				context.getDrawable(android.R.drawable.checkbox_off_background)
+				mContext.getDrawable(android.R.drawable.checkbox_off_background)
 		);
 		countryDrawable.addState(
 				new int[] {android.R.attr.state_checked},
-				context.getDrawable(android.R.drawable.checkbox_on_background)
+				mContext.getDrawable(android.R.drawable.checkbox_on_background)
 		);
 		return countryDrawable;
 	}

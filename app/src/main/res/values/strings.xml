@@ -1,4 +1,7 @@
 <resources>
 	<string name="app_name">Netflix Changer</string>
-	<string name="current_ip_label">Current IP address: %s</string>
+	<string name="textInfo">Current IP address: %s</string>
+	<string name="textInfoError">change country first!</string>
+	<string name="success">Country successfully changed to %s!</string>
+	<string name="error">Error connecting to service: %s</string>
 </resources>
