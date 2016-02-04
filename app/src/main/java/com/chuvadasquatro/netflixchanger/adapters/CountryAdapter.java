@@ -1,14 +1,15 @@
 package com.chuvadasquatro.netflixchanger.adapters;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.StateListDrawable;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckedTextView;
 
+import com.chuvadasquatro.netflixchanger.R;
 import com.chuvadasquatro.netflixchanger.utils.Constants;
+import com.chuvadasquatro.netflixchanger.utils.LayoutUtils;
 
 /**
  * @author Rodrigo Costa
@@ -44,23 +45,25 @@ public class CountryAdapter extends BaseAdapter {
 			return convertView;
 		}
 
+		// create checked text view
 		CheckedTextView country = new CheckedTextView(mContext);
-		country.setTag(mCountryCodes[position]);
-		country.setText(Constants.COUNTRIES.get(mCountryCodes[position]));
-		country.setCheckMarkDrawable(getCountryDrawable());
-		return country;
-	}
+		country.setLayoutParams(new ViewGroup.LayoutParams(
+				LayoutUtils.getDimension(mContext, R.dimen.itemWidth),
+				LayoutUtils.getDimension(mContext, R.dimen.itemHeight)
+		));
+		country.setGravity(Gravity.BOTTOM);
+		country.setCompoundDrawablesWithIntrinsicBounds(
+				null,
+				LayoutUtils.getFlagDrawable(mContext, mCountryCodes[position]),
+				null,
+				null
+		);
+		country.setTextSize(LayoutUtils.getDimension(mContext, R.dimen.itemTextSize));
 
-	private Drawable getCountryDrawable() {
-		StateListDrawable countryDrawable = new StateListDrawable();
-		countryDrawable.addState(
-				new int[] {-android.R.attr.state_checked},
-				mContext.getDrawable(android.R.drawable.checkbox_off_background)
-		);
-		countryDrawable.addState(
-				new int[] {android.R.attr.state_checked},
-				mContext.getDrawable(android.R.drawable.checkbox_on_background)
-		);
-		return countryDrawable;
+		// set values
+		country.setTag(mCountryCodes[position]);
+		country.setText(Constants.COUNTRIES.get(mCountryCodes[position]).toUpperCase());
+
+		return country;
 	}
 }
