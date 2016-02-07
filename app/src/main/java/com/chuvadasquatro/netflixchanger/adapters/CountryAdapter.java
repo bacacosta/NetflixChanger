@@ -51,7 +51,8 @@ public class CountryAdapter extends BaseAdapter {
 				LayoutUtils.getDimension(mContext, R.dimen.itemWidth),
 				LayoutUtils.getDimension(mContext, R.dimen.itemHeight)
 		));
-		country.setGravity(Gravity.BOTTOM);
+		country.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
+		country.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
 		country.setCompoundDrawablesWithIntrinsicBounds(
 				null,
 				LayoutUtils.getFlagDrawable(mContext, mCountryCodes[position]),
