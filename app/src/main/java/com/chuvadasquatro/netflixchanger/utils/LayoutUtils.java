@@ -27,55 +27,57 @@ public class LayoutUtils {
 		// normal state
 		drawable.addState(
 				new int[] {-android.R.attr.state_checked},
-				new BitmapDrawable(context.getResources(), getResizedFlag(context, countryCode))
+				new BitmapDrawable(context.getResources(), getFlag(context, countryCode))
 		);
 
 		// selected state
 		drawable.addState(
 				new int[] {android.R.attr.state_checked},
-				new BitmapDrawable(context.getResources(), getSelectedFlag(context, countryCode))
+				new BitmapDrawable(context.getResources(), getCheckedFlag(context, countryCode))
 		);
 
 		return drawable;
 	}
 
-	private static Bitmap getResizedFlag(Context context, String countryCode) {
-		return Bitmap.createScaledBitmap(
-				getFlag(context, countryCode),
-				getDimension(context, R.dimen.bmpWidth),
-				getDimension(context, R.dimen.bmpHeight),
-				true
-		);
+	private static Bitmap getFlag(Context context, String countryCode) {
+		return getBitmap(context, countryCode);
 	}
 
-	private static Bitmap getSelectedFlag(Context context, String countryCode) {
-		Bitmap resizedFlag = getResizedFlag(context, countryCode);
-		Bitmap selectedFlag = Bitmap.createBitmap(
-				resizedFlag.getWidth(),
-				resizedFlag.getHeight(),
+	private static Bitmap getCheckedFlag(Context context, String countryCode) {
+		Bitmap checkedFlag = Bitmap.createBitmap(
+				getDimension(context, R.dimen.bmpWidth),
+				getDimension(context, R.dimen.bmpHeight),
 				Bitmap.Config.ARGB_8888
 		);
+		Canvas canvas = new Canvas(checkedFlag);
 
 		// transform flag to black and white
-		Canvas canvas = new Canvas(selectedFlag);
 		Paint paint = new Paint();
 		ColorMatrix colorMatrix = new ColorMatrix();
 		colorMatrix.setSaturation(0);
 		ColorMatrixColorFilter colorFilter = new ColorMatrixColorFilter(colorMatrix);
 		paint.setColorFilter(colorFilter);
-		canvas.drawBitmap(resizedFlag, 0, 0, paint);
+		canvas.drawBitmap(getFlag(context, countryCode), 0, 0, paint);
 
-		return selectedFlag;
+		// add border
+		canvas.drawBitmap(getBitmap(context, "checked"), 0, 0, null);
+
+		return checkedFlag;
 	}
 
-	private static Bitmap getFlag(Context context, String countryCode) {
-		return BitmapFactory.decodeResource(
-				context.getResources(),
-				context.getResources().getIdentifier(
-						countryCode,
-						"drawable",
-						context.getPackageName()
-				)
+	private static Bitmap getBitmap(Context context, String filename) {
+		return Bitmap.createScaledBitmap(
+				BitmapFactory.decodeResource(
+						context.getResources(),
+						context.getResources().getIdentifier(
+								filename,
+								"drawable",
+								context.getPackageName()
+						)
+				),
+				getDimension(context, R.dimen.bmpWidth),
+				getDimension(context, R.dimen.bmpHeight),
+				true
 		);
 	}
 }
